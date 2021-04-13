@@ -90,11 +90,20 @@ class NhyktTest(unittest.TestCase):
         self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
         sleep(1)
         self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
-        # 创建时间戳，用于增加
-        # times = time.time()
+        # 增加学科
         self.driver.find_element_by_css_selector('span > input').send_keys('测试')
+        sleep(1)
         self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
-        # 接下来要删除新增的课程
+        # 下面删除学科
+        # 将屏幕滚动到最下面
+        self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
+        # 点击输入页数
+        self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys('100000\n')
+        all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td[2]')
+        for i in all:
+            print(i)
+            # if "测试" in course.text:
+            #     print('课程添加成功')
 
 
 if __name__ == '__main__':

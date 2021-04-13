@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7286f934-f96a-4f35-8ba5-470834fdbd39" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../APIAutoTest/.idea/APIAutoTest.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pythontest/.idea/Desktop.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pythontest/.idea/pythontest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/APIStudyTest.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../HTTP状态返回代码.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ProjectTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ProjectTest.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nhyktObject/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/test2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../data/教管系统-测试用例V1.2.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/add.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/alter.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/delete.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/demo_ddt2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/demo_random.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/list.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo/login.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../doReport.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../encryptTest/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../encryptTest/demo_Base64.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../encryptTest/demo_MD5.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../encryptTest/demo_RSA.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../encryptTest/encryptLogin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/courseLib.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/deleteAllCourse.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/host.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/loginLib.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/readExcels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../lib/sendCourseLib.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../other/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../other/demo_unittest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../other/demo_unittest2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../report/htmlReport.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../report/教管系统-测试结果.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../report/教管系统-测试结果2.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testCase/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testCase/doExcel.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testCase/doExcel2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testCase/tastCase1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../testCase/testCase2.py" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1r7RwVmzOuDKfzeJOnATLwAawjO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pythontest" />
+  </component>
+  <component name="RunManager">
+    <configuration name="pytest in test2.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="ProjectTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/nhyktObject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/nhyktObject/test2.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.pytest in test2.py" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7286f934-f96a-4f35-8ba5-470834fdbd39" name="Default Changelist" comment="" />
+      <created>1618325383085</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618325383085</updated>
+    </task>
+    <servers />
+  </component>
+</project>
