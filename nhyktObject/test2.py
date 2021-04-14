@@ -91,7 +91,7 @@ class NhyktTest(unittest.TestCase):
         sleep(1)
         self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
         # 增加学科
-        self.driver.find_element_by_css_selector('span > input').send_keys('测试')
+        self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
         sleep(1)
         self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
         # 下面删除学科
@@ -99,11 +99,14 @@ class NhyktTest(unittest.TestCase):
         self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
         # 点击输入页数
         self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys('100000\n')
-        all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td[2]')
+        # 获取最后一页列表内容
+        sleep(1)
+        all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
         for i in all:
-            print(i)
-            # if "测试" in course.text:
-            #     print('课程添加成功')
+            # print(i.text)
+            if "rock测试" in i.text:
+                print('课程添加成功')
+                i.find_element_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]').click()
 
 
 if __name__ == '__main__':
