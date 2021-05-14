@@ -1,0 +1,12 @@
+1618474578616	geckodriver	INFO	Listening on 127.0.0.1:61956
+1618474581664	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\rust_mozprofileKIOWeu"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1618474583778	Marionette	INFO	Listening on port 61970
+1618474583851	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: http://yk.callwine.net/sem-portal/scripts/room/emoji.js, line 96: TypeError: emNode is undefined
+JavaScript warning: http://yk.callwine.net/sem-portal/scripts/common.js, line 386: unreachable code after return statement
+JavaScript warning: http://yk.callwine.net/sem-portal/scripts/common.js, line 386: unreachable code after return statement
+1618474587262	Marionette	INFO	Stopped listening on port 61970
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

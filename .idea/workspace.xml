@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="7286f934-f96a-4f35-8ba5-470834fdbd39" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/ProjectTest.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ProjectTest.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nhyktObject/beautifulReport.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nhyktObject/nhykt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/nhyktObject/sendEmail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nhyktObject/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/test2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nhyktObject/test2.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1r7RwVmzOuDKfzeJOnATLwAawjO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -25,11 +44,44 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/nhyktObject/nhykt.py" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
-  <component name="RunManager">
-    <configuration name="Unittests in test2.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PythonObjects\nhyktObject" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python tests.Unittests in t2.py">
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="ProjectTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Python3.8\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/nhyktObject" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nhyktObject/nhykt.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in nhykt.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="ProjectTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -40,13 +92,45 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/nhyktObject/test2.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/nhyktObject/nhykt.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in t2.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="ProjectTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/nhyktObject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/nhyktObject/t2.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in t4.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="ProjectTest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/nhyktObject" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/nhyktObject/t4.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests in test2.py" />
+        <item itemvalue="Python tests.Unittests in t2.py" />
+        <item itemvalue="Python tests.Unittests in t4.py" />
+        <item itemvalue="Python tests.Unittests in nhykt.py" />
       </list>
     </recent_temporary>
   </component>
@@ -61,14 +145,69 @@
       <workItem from="1618363380409" duration="32000" />
       <workItem from="1618363413532" duration="47000" />
       <workItem from="1618385302474" duration="5063000" />
+      <workItem from="1618453937162" duration="7755000" />
+      <workItem from="1618471194884" duration="4832000" />
+      <workItem from="1618544587929" duration="9826000" />
+      <workItem from="1618797340280" duration="2136000" />
+      <workItem from="1618801861251" duration="1618000" />
+      <workItem from="1618803921646" duration="107000" />
+      <workItem from="1618815409518" duration="837000" />
+      <workItem from="1618817350396" duration="118000" />
+      <workItem from="1618999755766" duration="290000" />
+      <workItem from="1619001910336" duration="630000" />
+      <workItem from="1619073525788" duration="1323000" />
+      <workItem from="1619145040797" duration="8587000" />
+      <workItem from="1619159893602" duration="4820000" />
+      <workItem from="1619316555737" duration="4010000" />
+      <workItem from="1619433634653" duration="710000" />
+      <workItem from="1619515133130" duration="1817000" />
+      <workItem from="1619604278482" duration="19000" />
+      <workItem from="1619664685349" duration="3137000" />
+      <workItem from="1619765215697" duration="12318000" />
+      <workItem from="1620438006388" duration="16553000" />
+      <workItem from="1620616721941" duration="6924000" />
+      <workItem from="1620644067834" duration="584000" />
+      <workItem from="1620807864083" duration="6657000" />
+      <workItem from="1620869624245" duration="1578000" />
+      <workItem from="1620871218845" duration="33233000" />
+      <workItem from="1620955462840" duration="3623000" />
+      <workItem from="1620960042646" duration="787000" />
+      <workItem from="1620962178597" duration="11109000" />
+      <workItem from="1620980204743" duration="5006000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_test2_py.coverage" NAME="Unittests in test2.py Coverage Results" MODIFIED="1618397161487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_test_py.coverage" NAME="Unittests in test.py Coverage Results" MODIFIED="1618466672914" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$t3.coverage" NAME="t3 Coverage Results" MODIFIED="1620893478916" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_for_test_TestSeleniumGrid_test_grid.coverage" NAME="Unittests for test.TestSeleniumGrid.test_grid Coverage Results" MODIFIED="1618454961816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_t4_py.coverage" NAME="Unittests in t4.py Coverage Results" MODIFIED="1620980370351" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$test.coverage" NAME="test Coverage Results" MODIFIED="1619000019272" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Test3__1_.coverage" NAME="Test3 (1) Coverage Results" MODIFIED="1620644283783" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_nhykt_py.coverage" NAME="Unittests in nhykt.py Coverage Results" MODIFIED="1620977681464" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$windowsTest3.coverage" NAME="windowsTest3 Coverage Results" MODIFIED="1619665207451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$t4.coverage" NAME="t4 Coverage Results" MODIFIED="1620974960076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
     <SUITE FILE_PATH="coverage/PythonObjects$pytest_in_test2_py.coverage" NAME="pytest in test2.py Coverage Results" MODIFIED="1618385757513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$test3.coverage" NAME="test3 Coverage Results" MODIFIED="1618803152671" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$t1.coverage" NAME="t1 Coverage Results" MODIFIED="1619157588153" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_test2_py.coverage" NAME="Unittests in test2.py Coverage Results" MODIFIED="1620910296172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_for_test2_NhyktTest_test007AddLiveCourse.coverage" NAME="Unittests for test2.NhyktTest.test007AddLiveCourse Coverage Results" MODIFIED="1620909698586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$t2.coverage" NAME="t2 Coverage Results" MODIFIED="1620977153875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_t2_py.coverage" NAME="Unittests in t2.py Coverage Results" MODIFIED="1620980654310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
   </component>
 </project>
