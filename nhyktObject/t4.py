@@ -4,11 +4,13 @@ import zmail
 from BeautifulReport import BeautifulReport
 
 from TestRunner import createTestRunner
+from beautifulReport import testBeautifulReport
 from sendEmail import sEmail
 
 
 class a(unittest.TestCase):
     def test001b(self):
+        '''cs'''
         pass
 
     def test002c(self):
@@ -19,6 +21,7 @@ class a(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    createTestRunner('.', 't4.py', './report.html', '南海云课堂管理后台自动化测试报告', '南海云课堂管理后台主要流程测试')
-    time.sleep(1)
-    sEmail('./report.html', '1483836794@qq.com')
+    testBeautifulReport("t4.py", "南海云课堂管理后台自动化测试报告", "南海云课堂管理后台回归流程测试")
+    # createTestRunner('.', 't4.py', './report.html', '南海云课堂管理后台自动化测试报告', '南海云课堂管理后台主要流程测试')
+    # time.sleep(1)
+    # sEmail('./report.html', '1483836794@qq.com')

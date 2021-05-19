@@ -1,23 +1,27 @@
-import HTMLTestRunner
-
 from selenium import webdriver
 from time import sleep
 from PIL import Image, ImageEnhance
 import pytesseract, unittest, time
 from selenium.webdriver.common.keys import Keys
-import win32com.client  # 上传文件模块
-from TestRunner import createTestRunner
-from sendEmail import sEmail
+from beautifulReport import testBeautifulReport
+from selenium.webdriver.chrome.options import Options
+from config import imgFile, adminHost, teacherHost, studentHost, adminLoginName, adminPassWord
+from config import teacherLoginName, teacherPassWord, studentLoginName, studentPassWord
 
 
 class NhyktTest(unittest.TestCase):
-    global timelast, Phone, courseName
+    global timelast, Phone, courseName, liveCourse
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome()
-        cls.driver.maximize_window()
-        cls.driver.get("https://admin.tiac.youkehudong.com/")
+        chrome_options = Options()
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        cls.driver = webdriver.Chrome(chrome_options=chrome_options)
+        cls.driver.get(adminHost)
+        cls.driver.set_window_size(1920, 1080)
         cls.driver.implicitly_wait(5)
         cls.driver.find_element_by_css_selector('[class="loginChange"]').click()
 
@@ -25,10 +29,10 @@ class NhyktTest(unittest.TestCase):
     def tearDownClass(cls):
         print("-----------测试结束！结果发送中。。。-----------")
 
-    def GetCode(self):  # 获取图片验证码
+    def GetCode(self, file):  # 获取图片验证码
 
         # 浏览器页面截屏
-        self.driver.get_screenshot_as_file(r"D:\\a.png")
+        self.driver.get_screenshot_as_file(file)
 
         # 定位验证码位置及大小
         location = self.driver.find_element_by_id('s-canvas').location
@@ -41,7 +45,7 @@ class NhyktTest(unittest.TestCase):
         bottom = location['y'] + size['height']
 
         # 从文件读取截图，截取验证码位置再次保存
-        img = Image.open(r"D:\\a.png").crop((left, top, right, bottom))
+        img = Image.open(file).crop((left, top, right, bottom))
 
         img = img.convert('L')  # 转换模式：L | RGB
 
@@ -49,20 +53,21 @@ class NhyktTest(unittest.TestCase):
 
         img = img.enhance(2.0)  # 增加饱和度
 
-        img.save(r"D:\\a.png")
+        img.save(file)
 
         # 再次读取识别验证码
-        img = Image.open(r"D:\\a.png")
+        img = Image.open(file)
 
         code = pytesseract.image_to_string(img).replace(' ', '')
         # code= pytesser.image_file_to_string(screenImg)
         return code.strip()
 
     def test001AdminLogin(self):  # admin登录
+        '''admin登录'''
         sleep(1)
-        self.driver.find_elements_by_css_selector('span > input')[0].send_keys('admin')
-        self.driver.find_elements_by_css_selector('span > input')[1].send_keys('a123456')
-        code = self.GetCode()
+        self.driver.find_elements_by_css_selector('span > input')[0].send_keys(adminLoginName)
+        self.driver.find_elements_by_css_selector('span > input')[1].send_keys(adminPassWord)
+        code = self.GetCode(imgFile)
         # 输入验证码
         self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
         self.driver.find_element_by_css_selector('span > button').click()
@@ -75,7 +80,7 @@ class NhyktTest(unittest.TestCase):
                 break
             if warn:
                 self.driver.find_element_by_id('s-canvas').click()
-                code = self.GetCode()
+                code = self.GetCode(imgFile)
                 inp = self.driver.find_elements_by_css_selector('span > input')[2]
                 # 清除输入框内容
                 inp.send_keys(Keys.CONTROL + 'a')
@@ -83,7 +88,6 @@ class NhyktTest(unittest.TestCase):
                 # 输入验证码
                 inp.send_keys(code)
                 self.driver.find_element_by_css_selector('span > button').click()
-                # print(warn.text)
 
             else:
                 break
@@ -91,6 +95,7 @@ class NhyktTest(unittest.TestCase):
         return print('登录成功')
 
     def test002AddCourse(self):  # 新增学科
+        '''admin新增学科删除学科'''
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/div').click()
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/ul/li[1]').click()
         self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
@@ -106,19 +111,21 @@ class NhyktTest(unittest.TestCase):
         self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
             '100000\n')
         sleep(1)
+        n = 0
         all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
         for i in all:
+            n += 1
             if "rock测试" in i.text:
                 print('学科添加成功')
                 deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-                msg = len(deletes)
-                deletes[msg - 1].click()
+                deletes[n - 1].click()
                 sleep(1)
                 self.driver.find_element_by_css_selector(
                     'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
         return print("学科新增功能测试正常")
 
     def test003AddSchool(self):  # 新增学校
+        '''admin新增学校和删除学校'''
         self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
         sleep(1)
         self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[0].click()
@@ -138,16 +145,19 @@ class NhyktTest(unittest.TestCase):
         self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
         # 获取第一页的学校列表
         sleep(1)
+        n = 0
         schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
         for school in schools:
+            n += 1
             if 'rock测试学校' in school.text:
-                schools[0].find_element_by_css_selector('[class="option-danger-color"]').click()
+                schools[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
                 sleep(1)
                 self.driver.find_element_by_css_selector(
                     ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
         return print('学校新增功能测试正常')
 
     def test004AddTeacher(self):  # 新增老师
+        '''admin新增老师'''
         global newTeacherPhone, Phone
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/div').click()
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[1]').click()
@@ -159,7 +169,7 @@ class NhyktTest(unittest.TestCase):
         # 老师姓名
         teacherFrom[0].send_keys('rock测试')
         # 老师手机号
-        Phone = 11111157
+        Phone = 11111179
         teacherFrom[1].send_keys('131' + str(Phone))
         # 老师教龄
         teacherFrom[5].send_keys('1')
@@ -186,7 +196,7 @@ class NhyktTest(unittest.TestCase):
             if ele:
                 # 滑到顶部
                 self.driver.execute_script("var q=document.documentElement.scrollTop=0")
-                Phone +=1
+                Phone += 1
                 # 清除输入框内容
                 teacherFrom[1].send_keys(Keys.CONTROL + 'a')
                 teacherFrom[1].send_keys(Keys.DELETE)
@@ -196,19 +206,24 @@ class NhyktTest(unittest.TestCase):
                 # 将屏幕滚动到最下面
                 self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
                 # 提交
+                sleep(1)
                 self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
                 sleep(1)
             else:
                 break
         # 获取老师列表
-        teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td')[3]
-        if newTeacherPhone in teacherListPhone.text:
-            print('新增老师成功')
-        else:
-            print('新增失败')
-        return print('新增老师功能测试正常')
+        teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+        for i in teacherListPhone:
+            if newTeacherPhone == i.text:
+                print('新增老师功能测试正常')
+                break
+            else:
+                print('新增失败')
+
+        return
 
     def test005AddStudent(self):  # 新增学生
+        '''admin新增学生'''
         global newStudentPhone, Phone
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[2]').click()
         sleep(1)
@@ -249,15 +264,19 @@ class NhyktTest(unittest.TestCase):
                 sleep(1)
             else:
                 break
-        # 获取老师列表
-        teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td')[3]
-        if newStudentPhone in teacherListPhone.text:
-            print('新增学生成功')
-        else:
-            print('新增学生失败')
-        return print('新增学生功能测试正常')
+        # 获取学生列表
+        studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+        for i in studentListPhone:
+            if newStudentPhone == i.text:
+                print('新增学生功能测试正常')
+                break
+            else:
+                print('新增学生失败')
+
+        return
 
     def test006AddTourclass(self): # 新增巡课
+        '''admin新增巡课'''
         global timelast
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[3]').click()
         sleep(1)
@@ -275,14 +294,17 @@ class NhyktTest(unittest.TestCase):
         # 提交
         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
         # 获取巡课列表
-        auditList = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td')[2]
-        if auditName in auditList.text:
-            print('新增巡课成功')
-        else:
-            print('新增巡课失败')
-        return print('新增巡课功能测试正常')
+        auditList = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[3]')
+        for i in auditList:
+            if auditName == i.text:
+                print('新增巡课功能测试正常')
+                break
+            else:
+                print('新增巡课失败')
+        return
 
-    def test007AddLiveCourse(self):  # 新增直播课
+    def test007AddLiveCourse(self):
+        '''admin添加直播课'''
         global courseName
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/div').click()
         self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
@@ -294,10 +316,7 @@ class NhyktTest(unittest.TestCase):
         sleep(1)
         self.driver.find_element_by_css_selector('[class="ant-input"]').send_keys(courseName)
         # 点击上传封面
-        self.driver.find_element_by_css_selector('[class="ant-upload"]').click()
-        sh = win32com.client.Dispatch("WScript.shell")
-        sleep(1)
-        sh.Sendkeys('D:\\a.png\n')  # \n == 回车
+        self.driver.find_element_by_xpath('//*[@class="ant-upload"]/input').send_keys(imgFile)
         sleep(1)
         self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
         # 选择学科
@@ -319,7 +338,8 @@ class NhyktTest(unittest.TestCase):
         sleep(1)
         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
         # 获取温馨提示弹窗
-        warning = self.driver.find_element_by_css_selector('[class="ant-modal-confirm-content"]').text
+        sleep(1)
+        warning = self.driver.find_element_by_css_selector('[class="ant-modal-confirm-content"]')
         if warning:
             print('课程新增成功')
             print('课程管理测试成功')
@@ -337,7 +357,9 @@ class NhyktTest(unittest.TestCase):
         self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
         return courseName
 
-    def test008CreateLive(self):  # 排课
+    def test008CreateLive(self):
+        '''admin排课'''
+        global liveCourse
         # 进入快速排课,输入上课老师
         self.driver.find_element_by_css_selector('[class="ant-select ant-select-enabled ant-select-no-arrow"]').click()
         self.driver.find_elements_by_css_selector('[class="ant-select-search__field"]')[1].send_keys('rock')
@@ -353,21 +375,24 @@ class NhyktTest(unittest.TestCase):
         nowTime = time.strftime('%H%M', time.localtime(time.time()))
         sleep(1)
         self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[0].click()
+        sleep(1)
         allHour = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
         allMinute = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][2]/ul/li')
-        browserHour = self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
-        browserMinute = self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
+        browserHour = \
+        self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
+        browserMinute = \
+        self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
         nowMinute = nowTime[2] + nowTime[3]
         nowHour = nowTime[0] + nowTime[1]
-        if int(nowMinute) > 59:
-            subscript1 = int(browserHour.text)+1  # 下标
+        if int(nowMinute) >= 58:
+            subscript1 = int(browserHour.text) + 1  # 下标
             allHour[subscript1].click()
         else:
-            subscript2 = int(browserMinute.text)+2
+            subscript2 = int(browserMinute.text) + 2
             allMinute[subscript2].click()
 
         self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
-        etime = str(int(nowHour)+1)+':'+str(nowMinute)
+        etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
         sleep(1)
         self.driver.find_element_by_css_selector('[class="ant-time-picker-panel-input "]').send_keys(etime)
         self.driver.find_element_by_css_selector('[class="title"]').click()
@@ -376,20 +401,26 @@ class NhyktTest(unittest.TestCase):
         self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
         # 点击提交
         self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
-        liveCourse = self.driver.find_element_by_css_selector(' tr:nth-child(1) > td:nth-child(7)')
-        if courseName == liveCourse.text:
-            print('排课成功')
-        return print('排课管理测试成功')
+        sleep(1)
+        liveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
+        for i in liveCourse:
+            if courseName == i.text:
+                print('排课管理测试成功')
+                break
+            else:
+                print('排课失败')
+        return liveCourse
 
-    def test009TeacherLogin(self):  # 老师登录
-        self.driver.execute_script('window.open("https://admin.tiac.youkehudong.com")')
+    def test009TeacherLogin(self):
+        '''老师登录'''
+        self.driver.execute_script(f"window.open({teacherHost})")
         allHandles = self.driver.window_handles
         self.driver.switch_to.window(allHandles[-1])
         self.driver.find_element_by_css_selector('[class="loginChange"]').click()
         sleep(1)
-        self.driver.find_elements_by_css_selector('span > input')[0].send_keys('T2010030489953')
-        self.driver.find_elements_by_css_selector('span > input')[1].send_keys('a123456')
-        code = self.GetCode()
+        self.driver.find_elements_by_css_selector('span > input')[0].send_keys(teacherLoginName)
+        self.driver.find_elements_by_css_selector('span > input')[1].send_keys(teacherPassWord)
+        code = self.GetCode(imgFile)
         # 输入验证码
         self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
         self.driver.find_element_by_css_selector('span > button').click()
@@ -402,7 +433,7 @@ class NhyktTest(unittest.TestCase):
                 break
             if warn:
                 self.driver.find_element_by_id('s-canvas').click()
-                code = self.GetCode()
+                code = self.GetCode(imgFile)
                 inp = self.driver.find_elements_by_css_selector('span > input')[2]
                 # 清除输入框内容
                 inp.send_keys(Keys.CONTROL + 'a')
@@ -415,15 +446,23 @@ class NhyktTest(unittest.TestCase):
                 break
         ele = self.driver.find_element_by_css_selector('[title="rock"]')
         if ele:
-            pass
+            print('老师登录成功')
         else:
             print('未登录')
-        return print('老师登录成功')
+        return
 
-    def test010TeacherLive(self):  # 老师开始直播
-        course = self.driver.find_element_by_css_selector(' tr:nth-child(1) > td:nth-child(5)').text
+    def test010TeacherLive(self):
+        '''老师上课'''
         # 点击进入直播
-        self.driver.find_element_by_css_selector(' tr:nth-child(1) > td:nth-child(9) > span:nth-child(2) > a').click()
+        n = 0
+        allCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[5]')
+        for i in allCourse:
+            n += 1
+            if courseName == i.text:
+                ele = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[n - 1]
+                ele.find_element_by_link_text('进入直播').click()
+                break
+
         # 获取所有句柄
         sleep(1)
         allHandles = self.driver.window_handles
@@ -438,24 +477,23 @@ class NhyktTest(unittest.TestCase):
         # 点击 上课
         self.driver.find_elements_by_css_selector('[class="tic-btn headerbtn start"]')[0].click()
         # 判断是否上课
-        sleep(1)
+        sleep(2)
         ele = self.driver.find_element_by_css_selector('[class="left-time menu-course__time"]')
-        if ele:
-            print(course + '上课成功')
-        else:
-            print('未上课')
+        if '已开课' in ele.text:
+            print(courseName + '上课成功')
+
         return print('老师直播测试成功')
 
-    def test011StudentLogin(self):  # 学生登录
-        self.driver.execute_script('window.open("https://student.tiac.ykhdedu.com/login")')
-        sleep(1)
+    def test011StudentLogin(self):
+        '''学生登录'''
+        self.driver.execute_script(f"window.open({studentHost})")
         allHandles = self.driver.window_handles
         self.driver.switch_to.window(allHandles[-1])
         self.driver.find_element_by_css_selector('[class="blue_color"]').click()
         sleep(1)
-        self.driver.find_elements_by_css_selector('span > input')[0].send_keys('S1992071833190')
-        self.driver.find_elements_by_css_selector('span > input')[1].send_keys('a123456')
-        code = self.GetCode()
+        self.driver.find_elements_by_css_selector('span > input')[0].send_keys(studentLoginName)
+        self.driver.find_elements_by_css_selector('span > input')[1].send_keys(studentPassWord)
+        code = self.GetCode(imgFile)
         # 输入验证码
         self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
         self.driver.find_element_by_css_selector('span > button').click()
@@ -468,7 +506,7 @@ class NhyktTest(unittest.TestCase):
                 break
             if warn:
                 self.driver.find_element_by_id('s-canvas').click()
-                code = self.GetCode()
+                code = self.GetCode(imgFile)
                 inp = self.driver.find_elements_by_css_selector('span > input')[2]
                 # 清除输入框内容
                 inp.send_keys(Keys.CONTROL + 'a')
@@ -486,7 +524,8 @@ class NhyktTest(unittest.TestCase):
 
         return
 
-    def test012StudentIntoLive(self):  # 学生进入直播
+    def test012StudentIntoLive(self):
+        '''学生进入直播间上课'''
         # 点击进入直播
         self.driver.find_element_by_xpath('//*[@class="option_item online"]/span').click()
         sleep(2)
@@ -494,20 +533,62 @@ class NhyktTest(unittest.TestCase):
         self.driver.switch_to.window(allHandles[-1])
         sleep(2)
         ele = self.driver.find_element_by_css_selector('[class="left-time menu-course__time"]')
-        if ele:
+        if '已开课' in ele.text:
             print('学生进入直播间成功')
 
+        return print('学生进入直播间测试正常')
+
+    def test013Clear(self):
+        '''老师下课，删除排课信息，删除新增的课程'''
+        # 获取所有的浏览器句柄
+        allHandles = self.driver.window_handles
         self.driver.switch_to.window(allHandles[2])
         # 老师关闭直播
         self.driver.find_element_by_css_selector('[class="tic-btn headerbtn end red"]').click()
         self.driver.find_element_by_css_selector('[class="ivu-btn ivu-btn-primary ivu-btn-large"]').click()
+        # admin删除创建的直播课
+        self.driver.switch_to.window(allHandles[0])
+        self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
+        s = 0
+        self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
+        allCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[3]')
+        for j in allCourse:
+            s += 1
+            if courseName == j.text:
+                ele1 = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[s - 1]
+                ele1.find_element_by_link_text('删除').click()
+                sleep(1)
+                self.driver.find_element_by_xpath('//*[@class="ant-modal-confirm-btns"]/button[2]').click()
+                if courseName in allCourse:
+                    print('删除不成功')
+                else:
+                    print('删除课程成功')
+                break
+
+        # admin删除排课
+        sleep(1)
+        n = 0
+        self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[1]').click()
+        AllLiveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
+        for i in AllLiveCourse:
+            n += 1
+            if courseName == i.text:
+                ele = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[n - 1]
+                ele.find_element_by_link_text('删除').click()
+                sleep(1)
+                self.driver.find_element_by_xpath('//*[@class="ant-modal-confirm-btns"]/button[2]').click()
+                if courseName in AllLiveCourse:
+                    print('删除不成功')
+                else:
+                    print('删除课程成功')
+                break
+
         # 退出浏览器
         sleep(1)
         self.driver.quit()
-        return print('学生进入直播间测试正常,直播间已关闭。')
+        return
 
 
 if __name__ == '__main__':
-    createTestRunner('.', 'nhykt.py', './report.html', '南海云课堂管理后台自动化测试报告', '南海云课堂管理后台主要流程测试')
-    sleep(1)
-    sEmail('./report.html', '1483836794@qq.com')
+    # 生成测试报告
+    testBeautifulReport("nhykt.py", "report", "南海云课堂管理后台回归流程测试")
