@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7286f934-f96a-4f35-8ba5-470834fdbd39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/nhyktObject/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nhyktObject/login.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nhyktObject/nhykt.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/nhykt.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nhyktObject/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nhyktObject/sendEmail.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/sendEmail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nhyktObject/t2.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/t2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nhyktObject/t4.py" beforeDir="false" afterPath="$PROJECT_DIR$/nhyktObject/t4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +57,7 @@
       <recent name="D:\PythonObjects\nhyktObject" />
     </key>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in nhykt.py">
+  <component name="RunManager" selected="Python tests.Unittests in t2.py">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="ProjectTest" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,8 +149,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests in nhykt.py" />
         <item itemvalue="Python tests.Unittests in t2.py" />
+        <item itemvalue="Python tests.Unittests in nhykt.py" />
         <item itemvalue="Python tests.Unittests in t4.py" />
         <item itemvalue="Python.sendEmail" />
       </list>
@@ -205,7 +201,7 @@
       <workItem from="1621303130532" duration="8831000" />
       <workItem from="1621320530404" duration="7625000" />
       <workItem from="1621387392198" duration="10744000" />
-      <workItem from="1621405068053" duration="14379000" />
+      <workItem from="1621405068053" duration="15323000" />
     </task>
     <servers />
   </component>
@@ -241,6 +237,6 @@
     <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_test2_py.coverage" NAME="Unittests in test2.py Coverage Results" MODIFIED="1620910296172" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
     <SUITE FILE_PATH="coverage/PythonObjects$Unittests_for_test2_NhyktTest_test007AddLiveCourse.coverage" NAME="Unittests for test2.NhyktTest.test007AddLiveCourse Coverage Results" MODIFIED="1620909698586" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
     <SUITE FILE_PATH="coverage/PythonObjects$t2.coverage" NAME="t2 Coverage Results" MODIFIED="1620977153875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
-    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_t2_py.coverage" NAME="Unittests in t2.py Coverage Results" MODIFIED="1621414524630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
+    <SUITE FILE_PATH="coverage/PythonObjects$Unittests_in_t2_py.coverage" NAME="Unittests in t2.py Coverage Results" MODIFIED="1621420749741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/nhyktObject" />
   </component>
 </project>

@@ -413,7 +413,7 @@ class NhyktTest(unittest.TestCase):
 
     def test009TeacherLogin(self):
         '''老师登录'''
-        self.driver.execute_script(f"window.open({teacherHost})")
+        self.driver.execute_script(f"window.open('{teacherHost}')")
         allHandles = self.driver.window_handles
         self.driver.switch_to.window(allHandles[-1])
         self.driver.find_element_by_css_selector('[class="loginChange"]').click()
@@ -486,7 +486,7 @@ class NhyktTest(unittest.TestCase):
 
     def test011StudentLogin(self):
         '''学生登录'''
-        self.driver.execute_script(f"window.open({studentHost})")
+        self.driver.execute_script(f"window.open('{studentHost}')")
         allHandles = self.driver.window_handles
         self.driver.switch_to.window(allHandles[-1])
         self.driver.find_element_by_css_selector('[class="blue_color"]').click()
