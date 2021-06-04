@@ -136,222 +136,255 @@ class NhyktTest(unittest.TestCase):
             assert False
         return
 
-    # @BeautifulReport.add_test_img('NhyktTest_test002AddCourse')
-    # def test002AddCourse(self):  # 新增学科
-    #     '''admin新增学科删除学科'''
+    @BeautifulReport.add_test_img('NhyktTest_test002AddCourse')
+    def test002AddCourse(self):  # 新增学科
+        '''admin新增学科删除学科'''
+        try:
+            self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/div').click()
+            self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/ul/li[1]').click()
+            self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
+
+            # 将屏幕滚动到最下面
+            self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
+            # 点击输入页数，进入最后一页
+            self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
+                '100000\n')
+            sleep(1)
+            n = 0
+            all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
+            for i in all:
+                n += 1
+                if "rock测试" in i.text:
+                    # 下面是删除学科
+                    deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    deletes[n - 1].click()
+                    sleep(1)
+                    self.driver.find_element_by_css_selector(
+                        'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    break
+                else:
+                    pass
+
+            # 增加学科
+            sleep(1)
+            self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
+            self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
+            sleep(1)
+            self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
+            self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
+                '100000\n')
+            x = 0
+            all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
+            for i in all:
+                x += 1
+                if "rock测试" in i.text:
+                    print('学科添加成功，学科新增功能测试正常！')
+                    self.driver.save_screenshot(f'./photo/{date}/test002AddCourseSucceed.png')
+                    # 下面是删除学科
+                    deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    deletes[x - 1].click()
+                    sleep(1)
+                    self.driver.find_element_by_css_selector(
+                        'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    break
+        except:
+            print('新增学科失败')
+            self.save_img('NhyktTest_test002AddCourse')
+            traceback.print_exc()
+            assert False
+        return
+    #
+    @BeautifulReport.add_test_img('NhyktTest_test003AddSchool')
+    def test003AddSchool(self):  # 新增学校
+        '''admin新增学校和删除学校'''
+        try:
+            self.driver.find_element_by_css_selector('[class=" 1ant-tabs-tab"]').click()
+            x = 0
+            schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            for school in schools:
+                x += 1
+                if 'rock测试学校' in school.text:
+                    # 下面是删除学校
+                    schools[x - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
+                    sleep(1)
+                    self.driver.find_element_by_css_selector(
+                        ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    break
+            sleep(1)
+            self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[0].click()
+            # 新增信息信息填写
+            schoolForm = self.driver.find_elements_by_css_selector('[class="ant-input"]')
+            # 学校名称
+            sleep(1)
+            schoolForm[0].send_keys('rock测试学校')
+            # 学校简称
+            schoolForm[1].send_keys('测试')
+            # 学校标识码
+            schoolForm[2].send_keys('1')
+            # 学校类型
+            self.driver.find_elements_by_css_selector('[class="select_option ant-select ant-select-enabled"]')[0].click()
+            # 这里选的是第一个类型
+            self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
+            self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
+            # 获取第一页的学校列表
+            sleep(1)
+            n = 0
+            schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            for school in schools:
+                n += 1
+                if 'rock测试学校' in school.text:
+                    print('学校新增功能测试正常')
+                    self.driver.save_screenshot(f'./photo/{date}/test003AddSchoolSucceed.png')
+                    # 下面是删除学校
+                    schools[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
+                    sleep(1)
+                    self.driver.find_element_by_css_selector(
+                        ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    break
+        except:
+            print('新增学校失败')
+            self.save_img('NhyktTest_test003AddSchool')
+            traceback.print_exc()
+            assert False
+        return
+
+    # @BeautifulReport.add_test_img('NhyktTest_test004AddTeacher')
+    # def test004AddTeacher(self):  # 新增老师
+    #     '''admin新增老师'''
+    #     global newTeacherPhone
     #     try:
-    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/div').click()
-    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/ul/li[1]').click()
-    #         self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
-    #         # 增加学科
+    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/div').click()
+    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[1]').click()
+    #         # 点击新增老师按钮
+    #         self.driver.find_element_by_xpath('//*[@class="option_group"]/button[1]').click()
+    #         # 老师信息表单
     #         sleep(1)
-    #         self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
-    #         self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
-    #         sleep(1)
-    #         self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
+    #         teacherFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
+    #         # 老师姓名
+    #         teacherFrom[0].send_keys('rock测试')
+    #         # 老师手机号
+    #         teacherFrom[1].send_keys('131' + str(phone.Phone))
+    #         # 老师教龄
+    #         teacherFrom[5].send_keys('1')
+    #         # 选择老师生日
+    #         self.driver.find_element_by_css_selector('[class="ant-calendar-picker-input ant-input"]').click()
+    #         self.driver.find_elements_by_css_selector('[class="ant-calendar-date"]')[0].click()
     #         # 将屏幕滚动到最下面
     #         self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
-    #         # 点击输入页数，进入最后一页
-    #         self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
-    #             '100000\n')
+    #         # 选择所属学校
+    #         self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[1].click()
+    #         self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
+    #         # 选择学科
+    #         self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[2].click()
+    #         self.driver.find_element_by_css_selector('li.ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-active').click()
+    #         # 选择教学年级
+    #         self.driver.find_element_by_css_selector('[class="ant-tag"]').click()
+    #         sleep(2)
+    #         self.driver.find_elements_by_css_selector('[class="input-radio"]')[0].click()
+    #         self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
+    #         # 提交
+    #         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+    #         while True:
+    #             ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
+    #             if ele:
+    #                 # 滑到顶部
+    #                 self.driver.execute_script("var q=document.documentElement.scrollTop=0")
+    #                 phone.Phone += 1
+    #                 # 清除输入框内容
+    #                 teacherFrom[1].send_keys(Keys.CONTROL + 'a')
+    #                 teacherFrom[1].send_keys(Keys.DELETE)
+    #                 # 重新输入
+    #                 newTeacherPhone = '131' + str(phone.Phone)
+    #                 teacherFrom[1].send_keys(newTeacherPhone)
+    #                 # 将屏幕滚动到最下面
+    #                 self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
+    #                 try:
+    #                     # 提交
+    #                     sleep(1)
+    #                     self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+    #                 except:
+    #                     pass
+    #
+    #             else:
+    #                 break
+    #         # 获取老师列表
     #         sleep(1)
-    #         n = 0
-    #         all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
-    #         for i in all:
-    #             n += 1
-    #             if "rock测试" in i.text:
-    #                 print('学科添加成功，学科新增功能测试正常！')
-    #                 self.driver.save_screenshot(f'./photo/{date}/test002AddCourseSucceed.png')
-    #                 # 下面是删除学科
-    #                 deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-    #                 deletes[n - 1].click()
-    #                 sleep(1)
-    #                 self.driver.find_element_by_css_selector(
-    #                     'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+    #         teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+    #         for i in teacherListPhone:
+    #             if newTeacherPhone == i.text:
+    #                 print('新增老师功能测试正常')
+    #                 self.driver.save_screenshot(f'./photo/{date}/test004AddTeacherSucceed.png')
     #                 break
     #     except:
-    #         print('新增学科失败')
-    #         self.save_img('NhyktTest_test002AddCourse')
+    #         print('新增老师失败')
+    #         self.save_img('NhyktTest_test004AddTeacher')
     #         traceback.print_exc()
     #         assert False
     #     return
     #
-    # @BeautifulReport.add_test_img('NhyktTest_test003AddSchool')
-    # def test003AddSchool(self):  # 新增学校
-    #     '''admin新增学校和删除学校'''
+    #
+    # @BeautifulReport.add_test_img('NhyktTest_test005AddStudent')
+    # def test005AddStudent(self):  # 新增学生
+    #     '''admin新增学生'''
+    #     global newStudentPhone
     #     try:
-    #         self.driver.find_element_by_css_selector('[class=" 1ant-tabs-tab"]').click()
+    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]').click()
+    #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[2]').click()
     #         sleep(1)
-    #         self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[0].click()
-    #         # 新增信息信息填写
-    #         schoolForm = self.driver.find_elements_by_css_selector('[class="ant-input"]')
-    #         # 学校名称
+    #         self.driver.find_element_by_xpath('//*[@class="option_group"]/button[1]').click()
+    #         # 填写学生基本信息
     #         sleep(1)
-    #         schoolForm[0].send_keys('rock测试学校')
-    #         # 学校简称
-    #         schoolForm[1].send_keys('测试')
-    #         # 学校标识码
-    #         schoolForm[2].send_keys('1')
-    #         # 学校类型
-    #         self.driver.find_elements_by_css_selector('[class="select_option ant-select ant-select-enabled"]')[0].click()
-    #         # 这里选的是第一个类型
+    #         studentFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
+    #         # 输入学生姓名
+    #         studentFrom[0].send_keys('rock测试')
+    #         # 输入学生家长手机号
+    #         studentFrom[1].send_keys('132' + str(phone.Phone))
+    #         # 选择生日
+    #         self.driver.find_element_by_css_selector('[class="ant-calendar-picker-input ant-input"]').click()
+    #         self.driver.find_elements_by_css_selector('[class="ant-calendar-date"]')[0].click()
+    #         # 选择学校
+    #         self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[0].click()
     #         self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
-    #         self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
-    #         # 获取第一页的学校列表
-    #         sleep(1)
-    #         n = 0
-    #         schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
-    #         for school in schools:
-    #             n += 1
-    #             if 'rock测试学校' in school.text:
-    #                 print('学校新增功能测试正常')
-    #                 self.driver.save_screenshot(f'./photo/{date}/test003AddSchoolSucceed.png')
-    #                 # 下面是删除学校
-    #                 schools[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
+    #         # 选择年级
+    #         self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[1].click()
+    #         self.driver.find_element_by_css_selector('li.ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-active').click()
+    #         # 点击提交
+    #         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+    #         while True:
+    #             ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
+    #             if ele:
+    #                 phone.Phone += 1
+    #                 # 清除输入框内容
+    #                 studentFrom[1].send_keys(Keys.CONTROL + 'a')
+    #                 studentFrom[1].send_keys(Keys.DELETE)
+    #                 # 重新输入
+    #                 newStudentPhone = '132' + str(phone.Phone)
+    #                 studentFrom[1].send_keys(newStudentPhone)
+    #                 # 提交
+    #                 try:
+    #                     self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+    #                 except:
+    #                     pass
     #                 sleep(1)
-    #                 self.driver.find_element_by_css_selector(
-    #                     ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+    #             else:
+    #                 break
+    #         # 获取学生列表
+    #         file = open('phone.py', 'w')
+    #         file.write(f'Phone={phone.Phone}')
+    #         file.close()
+    #         studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+    #         for i in studentListPhone:
+    #             if newStudentPhone == i.text:
+    #                 print('新增学生功能测试正常')
+    #                 self.driver.save_screenshot(f'./photo/{date}/test005AddStudentSucceed.png')
     #                 break
     #     except:
-    #         print('新增学校失败')
-    #         self.save_img('NhyktTest_test003AddSchool')
+    #         print('新增学生失败')
+    #         self.save_img('NhyktTest_test005AddStudent')
     #         traceback.print_exc()
     #         assert False
+    #
     #     return
-
-    def test004AddTeacher(self):  # 新增老师
-        '''admin新增老师'''
-        global newTeacherPhone
-        try:
-            self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/div').click()
-            self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[1]').click()
-            # 点击新增老师按钮
-            self.driver.find_element_by_xpath('//*[@class="option_group"]/button[1]').click()
-            # 老师信息表单
-            sleep(1)
-            teacherFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
-            # 老师姓名
-            teacherFrom[0].send_keys('rock测试')
-            # 老师手机号
-            teacherFrom[1].send_keys('131' + str(phone.Phone))
-            # 老师教龄
-            teacherFrom[5].send_keys('1')
-            # 选择老师生日
-            self.driver.find_element_by_css_selector('[class="ant-calendar-picker-input ant-input"]').click()
-            self.driver.find_elements_by_css_selector('[class="ant-calendar-date"]')[0].click()
-            # 将屏幕滚动到最下面
-            self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
-            # 选择所属学校
-            self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[1].click()
-            self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
-            # 选择学科
-            self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[2].click()
-            self.driver.find_element_by_css_selector('li.ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-active').click()
-            # 选择教学年级
-            self.driver.find_element_by_css_selector('[class="ant-tag"]').click()
-            sleep(1)
-            self.driver.find_elements_by_css_selector('[class="input-radio"]')[0].click()
-            self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
-            # 提交
-            self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
-            while True:
-                ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
-                if ele:
-                    # 滑到顶部
-                    self.driver.execute_script("var q=document.documentElement.scrollTop=0")
-                    phone.Phone += 1
-                    # 清除输入框内容
-                    teacherFrom[1].send_keys(Keys.CONTROL + 'a')
-                    teacherFrom[1].send_keys(Keys.DELETE)
-                    # 重新输入
-                    newTeacherPhone = '131' + str(phone.Phone)
-                    teacherFrom[1].send_keys(newTeacherPhone)
-                    # 将屏幕滚动到最下面
-                    self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
-                    # 提交
-                    sleep(1)
-                    self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
-                    sleep(1)
-                else:
-                    break
-            # 获取老师列表
-            teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
-            for i in teacherListPhone:
-                if newTeacherPhone == i.text:
-                    print('新增老师功能测试正常')
-                    self.driver.save_screenshot(f'./photo/{date}/test004AddTeacherSucceed.png')
-                    break
-                else:
-                    print('新增老师失败')
-        except:
-            print('新增老师失败')
-            self.driver.save_screenshot(f'./photo/{date}/test004AddTeacherFail.png')
-            traceback.print_exc()
-            assert False
-        return
-
-    @BeautifulReport.add_test_img('NhyktTest_test005AddStudent')
-    def test005AddStudent(self):  # 新增学生
-        '''admin新增学生'''
-        global newStudentPhone
-        try:
-            self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]').click()
-            self.driver.find_element_by_xpath('//*[@id="menu"]/li[4]/ul/li[2]').click()
-            sleep(1)
-            self.driver.find_element_by_xpath('//*[@class="option_group"]/button[1]').click()
-            # 填写学生基本信息
-            sleep(1)
-            studentFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
-            # 输入学生姓名
-            studentFrom[0].send_keys('rock测试')
-            # 输入学生家长手机号
-            studentFrom[1].send_keys('132' + str(phone.Phone))
-            # 选择生日
-            self.driver.find_element_by_css_selector('[class="ant-calendar-picker-input ant-input"]').click()
-            self.driver.find_elements_by_css_selector('[class="ant-calendar-date"]')[0].click()
-            # 选择学校
-            self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[0].click()
-            self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
-            # 选择年级
-            self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[1].click()
-            self.driver.find_element_by_css_selector('li.ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-active').click()
-            # 点击提交
-            self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
-            while True:
-                ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
-                if ele:
-                    phone.Phone += 1
-                    # 清除输入框内容
-                    studentFrom[1].send_keys(Keys.CONTROL + 'a')
-                    studentFrom[1].send_keys(Keys.DELETE)
-                    # 重新输入
-                    newStudentPhone = '132' + str(phone.Phone)
-                    studentFrom[1].send_keys(newStudentPhone)
-                    # 提交
-                    try:
-                        self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
-                    except:
-                        pass
-                    sleep(1)
-                else:
-                    break
-            # 获取学生列表
-            file = open('phone.py', 'w')
-            file.write(f'Phone={phone.Phone}')
-            file.close()
-            studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
-            for i in studentListPhone:
-                if newStudentPhone == i.text:
-                    print('新增学生功能测试正常')
-                    self.driver.save_screenshot(f'./photo/{date}/test005AddStudentSucceed.png')
-                    break
-        except:
-            print('新增学生失败')
-            self.save_img('NhyktTest_test005AddStudent')
-            traceback.print_exc()
-            assert False
-
-        return
     #
     # def test006AddTourClass(self): # 新增巡课
     #     '''admin新增巡课'''
@@ -389,6 +422,8 @@ class NhyktTest(unittest.TestCase):
     #         assert False
     #     return
     #
+
+    # @BeautifulReport.add_test_img('NhyktTest_test007AddLiveCourse')
     # def test007AddLiveCourse(self):
     #     '''admin添加直播课'''
     #     global courseName
@@ -396,7 +431,7 @@ class NhyktTest(unittest.TestCase):
     #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/div').click()
     #         self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
     #         sleep(1)
-    #         self.driver.find_element_by_xpath('//*[@class="button_group"]/button[1]').click()
+    #         self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[1].click()
     #         # 输入课程名称
     #         timelast = int(time.time() * 10000) % 10000
     #         courseName = 'rock课程' + str(timelast)
@@ -417,7 +452,7 @@ class NhyktTest(unittest.TestCase):
     #         self.driver.find_elements_by_css_selector('[class="input-radio"]')[6].click()
     #         self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[1].click()
     #         # 输入课程简介
-    #         self.driver.switch_to.frame('ueditor_1')
+    #         self.driver.switch_to.frame('ueditor_0')
     #         self.driver.find_elements_by_css_selector('[class="view"]')[1].send_keys('测试课程简介')
     #         # 回到之前的iframe
     #         self.driver.switch_to.default_content()
@@ -445,17 +480,18 @@ class NhyktTest(unittest.TestCase):
     #         self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
     #     except:
     #         print('新增课程失败')
-    #         self.driver.save_screenshot(f'./photo/{date}/test007AddLiveCourseFail.png')
-    #         traceback.print_exc()
+    #         self.save_img('NhyktTest_test007AddLiveCourse')
     #         assert False
     #     return courseName
     #
+    # @BeautifulReport.add_test_img('NhyktTest_test008CreateLive')
     # def test008CreateLive(self):
     #     '''admin排课'''
     #     global liveCourse
     #     try:
     #         # 进入快速排课,输入上课老师
-    #         self.driver.find_element_by_css_selector('[class="ant-select ant-select-enabled ant-select-no-arrow"]').click()
+    #         self.driver.find_element_by_css_selector(
+    #             '[class="ant-select ant-select-enabled ant-select-no-arrow"]').click()
     #         self.driver.find_elements_by_css_selector('[class="ant-select-search__field"]')[1].send_keys('rock')
     #         sleep(1)
     #         self.driver.find_element_by_css_selector('[class="title"]').click()
@@ -473,9 +509,9 @@ class NhyktTest(unittest.TestCase):
     #         allHour = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
     #         allMinute = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][2]/ul/li')
     #         browserHour = \
-    #         self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
+    #             self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
     #         browserMinute = \
-    #         self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
+    #             self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
     #         nowMinute = nowTime[2] + nowTime[3]
     #         nowHour = nowTime[0] + nowTime[1]
     #         if int(nowMinute) >= 58:
@@ -494,9 +530,10 @@ class NhyktTest(unittest.TestCase):
     #         self.driver.find_elements_by_css_selector('[class="ant-input"]')[0].send_keys('rock测试直播')
     #         self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
     #         # 点击提交
-    #         self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
+    #         # self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
     #         sleep(1)
     #         liveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
+    #         self.assertTrue(liveCourse)
     #         for i in liveCourse:
     #             if courseName == i.text:
     #                 print('排课管理测试成功')
@@ -506,7 +543,7 @@ class NhyktTest(unittest.TestCase):
     #                 print('排课失败')
     #     except:
     #         print('排课失败')
-    #         self.driver.save_screenshot(f'./photo/{date}/test008CreateLiveFail.png')
+    #         self.save_img('NhyktTest_test008CreateLive')
     #         traceback.print_exc()
     #         assert False
     #     return liveCourse

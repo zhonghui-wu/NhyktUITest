@@ -25,13 +25,14 @@ class NhyktTest(unittest.TestCase):
         else:
             pass
         try:
-            chrome_options = Options()
-            chrome_options.add_argument('--no-sandbox')
-            chrome_options.add_argument('--disable-dev-shm-usage')
-            chrome_options.add_argument('--headless')
-            chrome_options.add_argument('--disable-gpu')
-            chrome_options.add_argument('--force-device-scale-factor=1')
-            cls.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=chrome_options)
+            cls.chrome_options = Options()
+            cls.chrome_options.add_argument('--no-sandbox')
+            cls.chrome_options.add_argument('--disable-dev-shm-usage')
+            cls.chrome_options.add_argument('--headless')
+            cls.chrome_options.add_argument('--disable-gpu')
+            cls.chrome_options.add_argument('--force-device-scale-factor=1')
+            cls.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=cls.chrome_options)
+            # cls.driver = webdriver.Chrome(chrome_options=chrome_options)
             cls.driver.get(adminHost)
             cls.driver.set_window_size(1920, 1080)
             cls.driver.implicitly_wait(5)
@@ -123,6 +124,7 @@ class NhyktTest(unittest.TestCase):
                         break
 
             title = self.driver.find_element_by_css_selector('[title="admin"]')
+            self.assertTrue(title)
             if title:
                 print('admin登录成功')
                 self.driver.save_screenshot(f'./photo/{date}/test001AdminLoginSucceed.png')
@@ -157,6 +159,7 @@ class NhyktTest(unittest.TestCase):
             sleep(1)
             n = 0
             all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
+            self.assertTrue(all)
             for i in all:
                 n += 1
                 if "rock测试" in i.text:
@@ -201,6 +204,7 @@ class NhyktTest(unittest.TestCase):
             sleep(1)
             n = 0
             schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            self.assertTrue(schools)
             for school in schools:
                 n += 1
                 if 'rock测试学校' in school.text:
@@ -257,6 +261,8 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
             while True:
                 ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
+                teacherFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
+                self.assertTrue(teacherFrom)
                 if ele:
                     # 滑到顶部
                     self.driver.execute_script("var q=document.documentElement.scrollTop=0")
@@ -281,6 +287,7 @@ class NhyktTest(unittest.TestCase):
             # 获取老师列表
             sleep(1)
             teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+            self.assertTrue(teacherListPhone)
             for i in teacherListPhone:
                 if newTeacherPhone == i.text:
                     print('新增老师功能测试正常')
@@ -312,6 +319,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('[class="ant-calendar-picker-input ant-input"]').click()
             self.driver.find_elements_by_css_selector('[class="ant-calendar-date"]')[0].click()
             # 选择学校
+            sleep(1)
             self.driver.find_elements_by_css_selector('[class="ant-select-selection__placeholder"]')[0].click()
             self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
             # 选择年级
@@ -344,6 +352,7 @@ class NhyktTest(unittest.TestCase):
             # 获取学生列表
             sleep(1)
             studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
+            self.assertTrue(studentListPhone)
             for i in studentListPhone:
                 if newStudentPhone == i.text:
                     print('新增学生成功')
@@ -381,6 +390,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
             # 获取巡课列表
             auditList = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[3]')
+            self.assertTrue(auditList)
             for i in auditList:
                 if auditName == i.text:
                     print('新增巡课功能测试正常')
@@ -403,7 +413,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/div').click()
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
             sleep(1)
-            self.driver.find_element_by_xpath('//*[@class="button_group"]/button[1]').click()
+            self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[1].click()
             # 输入课程名称
             timelast = int(time.time() * 10000) % 10000
             courseName = 'rock课程' + str(timelast)
@@ -434,11 +444,9 @@ class NhyktTest(unittest.TestCase):
             # 获取温馨提示弹窗
             sleep(1)
             warning = self.driver.find_element_by_css_selector('[class="ant-modal-confirm-content"]')
-            if warning:
-                print('课程新增成功')
-                print('课程管理测试成功')
-            else:
-                print('课程新增不成功')
+            self.assertTrue(warning)
+            print('课程新增成功')
+            print('课程管理测试成功')
             # 点击以后再说
             self.driver.find_elements_by_css_selector('[class="ant-btn"]')[1].click()
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
@@ -485,13 +493,14 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
             nowMinute = nowTime[2] + nowTime[3]
             nowHour = nowTime[0] + nowTime[1]
+            # 开始时间
             if int(nowMinute) >= 58:
                 subscript1 = int(browserHour.text) + 1  # 下标
                 allHour[subscript1].click()
             else:
-                subscript2 = int(browserMinute.text) + 2
+                subscript2 = int(browserMinute.text) + 4
                 allMinute[subscript2].click()
-
+            # 选择结束时间
             self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
             etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
             sleep(1)
@@ -504,6 +513,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
             sleep(1)
             liveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
+            self.assertTrue(liveCourse)
             for i in liveCourse:
                 if courseName == i.text:
                     print('排课管理测试成功')
@@ -555,6 +565,7 @@ class NhyktTest(unittest.TestCase):
                     break
             sleep(2)
             ele = self.driver.find_element_by_css_selector('[class="addLiveBtn"]')
+            self.assertTrue(ele)
             if ele:
                 print('老师登录成功')
                 self.driver.save_screenshot(f'./photo/{date}/test009TeacherLoginSucceed.png')
@@ -574,6 +585,7 @@ class NhyktTest(unittest.TestCase):
             # 点击进入直播
             n = 0
             allCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[5]')
+            self.assertTrue(allCourse)
             for i in allCourse:
                 n += 1
                 if courseName == i.text:
@@ -695,6 +707,7 @@ class NhyktTest(unittest.TestCase):
             s = 0
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[3]').click()
             allCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[3]')
+            self.assertTrue(allCourse)
             for j in allCourse:
                 s += 1
                 if courseName == j.text:
@@ -718,6 +731,7 @@ class NhyktTest(unittest.TestCase):
             n = 0
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[1]').click()
             AllLiveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
+            self.assertTrue(AllLiveCourse)
             for i in AllLiveCourse:
                 n += 1
                 if courseName == i.text:
