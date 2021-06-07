@@ -32,7 +32,7 @@ class NhyktTest(unittest.TestCase):
             cls.chrome_options.add_argument('--disable-gpu')
             cls.chrome_options.add_argument('--force-device-scale-factor=1')
             cls.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=cls.chrome_options)
-            # cls.driver = webdriver.Chrome(chrome_options=chrome_options)
+            # cls.driver = webdriver.Chrome(chrome_options=cls.chrome_options)
             cls.driver.get(adminHost)
             cls.driver.set_window_size(1920, 1080)
             cls.driver.implicitly_wait(5)
@@ -146,11 +146,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/div').click()
             self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/ul/li[1]').click()
             self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
-            # 增加学科
             sleep(1)
-            self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
-            self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
-            self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             # 将屏幕滚动到最下面
             self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
             # 点击输入页数，进入最后一页
@@ -163,14 +159,38 @@ class NhyktTest(unittest.TestCase):
             for i in all:
                 n += 1
                 if "rock测试" in i.text:
+                    # 下面是删除学科
+                    delete = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    delete[n - 1].click()
+                    sleep(1)
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    break
+                else:
+                    pass
+
+            # 增加学科
+            sleep(1)
+            self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
+            self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
+            sleep(1)
+            self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
+            sleep(1)
+            self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
+                '100000\n')
+            x = 0
+            sleep(1)
+            all1 = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
+            self.assertTrue(all1)
+            for name in all1:
+                x += 1
+                if "rock测试" in name.text:
                     print('学科添加成功，学科新增功能测试正常！')
                     self.driver.save_screenshot(f'./photo/{date}/test002AddCourseSucceed.png')
                     # 下面是删除学科
-                    deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-                    deletes[n - 1].click()
+                    deletes = name.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    deletes[x - 1].click()
                     sleep(1)
-                    self.driver.find_element_by_css_selector(
-                        'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
                     break
         except:
             print('新增学科失败')
@@ -183,7 +203,22 @@ class NhyktTest(unittest.TestCase):
     def test003AddSchool(self):  # 新增学校
         '''admin新增学校和删除学校'''
         try:
+            sleep(1)
             self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
+            x = 0
+            sleep(1)
+            schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            self.assertTrue(schools)
+            for school in schools:
+                x += 1
+                if 'rock测试学校' in school.text:
+                    # 下面是删除学校
+                    deles = school.find_elements_by_css_selector('[class="option-danger-color"]')
+                    deles[x - 1].click()
+                    sleep(1)
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    sleep(1)
+                    break
             sleep(1)
             self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[0].click()
             # 新增信息信息填写
@@ -196,25 +231,26 @@ class NhyktTest(unittest.TestCase):
             # 学校标识码
             schoolForm[2].send_keys('1')
             # 学校类型
-            self.driver.find_elements_by_css_selector('[class="select_option ant-select ant-select-enabled"]')[0].click()
+            self.driver.find_elements_by_css_selector('[class="select_option ant-select ant-select-enabled"]')[
+                0].click()
             # 这里选的是第一个类型
             self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             # 获取第一页的学校列表
-            sleep(1)
+            sleep(2)
             n = 0
-            schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
-            self.assertTrue(schools)
-            for school in schools:
+            Allschool = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            self.assertTrue(Allschool)
+            for aschool in Allschool:
                 n += 1
-                if 'rock测试学校' in school.text:
+                if 'rock测试学校' in aschool.text:
                     print('学校新增功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test003AddSchoolSucceed.png')
                     # 下面是删除学校
-                    schools[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
+                    dele = aschool.find_elements_by_css_selector('[class="option-danger-color"]')
+                    dele[n-1].click()
                     sleep(1)
-                    self.driver.find_element_by_css_selector(
-                        ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
                     break
         except:
             print('新增学校失败')
@@ -331,14 +367,14 @@ class NhyktTest(unittest.TestCase):
                 ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
                 if ele:
                     phone.Phone += 1
-                    # 清除输入框内容
-                    studentFrom[1].send_keys(Keys.CONTROL + 'a')
-                    studentFrom[1].send_keys(Keys.DELETE)
-                    # 重新输入
-                    newStudentPhone = '132' + str(phone.Phone)
-                    studentFrom[1].send_keys(newStudentPhone)
-                    # 提交
                     try:
+                        # 清除输入框内容
+                        studentFrom[1].send_keys(Keys.CONTROL + 'a')
+                        studentFrom[1].send_keys(Keys.DELETE)
+                        # 重新输入
+                        newStudentPhone = '132' + str(phone.Phone)
+                        studentFrom[1].send_keys(newStudentPhone)
+                    # 提交
                         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
                     except:
                         pass
@@ -673,6 +709,8 @@ class NhyktTest(unittest.TestCase):
     def test012StudentIntoLive(self):
         '''学生进入直播间上课'''
         try:
+            # 关闭广告
+            self.driver.find_element_by_css_selector('[class="ant-modal-close-x"]').click()
             # 点击进入直播
             self.driver.find_element_by_xpath('//*[@class="option_item online"]/span').click()
             sleep(2)

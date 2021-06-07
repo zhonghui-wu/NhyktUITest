@@ -47,6 +47,7 @@ class NhyktTest(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+
         cls.driver.quit()
         print("-----------测试结束！结果发送中。。。-----------")
 
@@ -89,7 +90,7 @@ class NhyktTest(unittest.TestCase):
     def save_img(self, img_name):
         self.driver.save_screenshot(f'./img/{img_name}.png')
 
-    @BeautifulReport.add_test_img('NhyktTest_test001AdminLogin')
+    # @BeautifulReport.add_test_img('NhyktTest_test001AdminLogin')
     def test001AdminLogin(self):  # admin登录
         '''admin登录'''
         try:
@@ -136,7 +137,7 @@ class NhyktTest(unittest.TestCase):
             assert False
         return
 
-    @BeautifulReport.add_test_img('NhyktTest_test002AddCourse')
+    # @BeautifulReport.add_test_img('NhyktTest_test002AddCourse')
     def test002AddCourse(self):  # 新增学科
         '''admin新增学科删除学科'''
         try:
@@ -156,8 +157,8 @@ class NhyktTest(unittest.TestCase):
                 n += 1
                 if "rock测试" in i.text:
                     # 下面是删除学科
-                    deletes = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-                    deletes[n - 1].click()
+                    delete = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    delete[n - 1].click()
                     sleep(1)
                     self.driver.find_element_by_css_selector(
                         'div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
@@ -173,9 +174,10 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
                 '100000\n')
+            sleep(1)
             x = 0
-            all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
-            for i in all:
+            all1 = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
+            for i in all1:
                 x += 1
                 if "rock测试" in i.text:
                     print('学科添加成功，学科新增功能测试正常！')
@@ -194,16 +196,20 @@ class NhyktTest(unittest.TestCase):
             assert False
         return
     #
-    @BeautifulReport.add_test_img('NhyktTest_test003AddSchool')
+    # @BeautifulReport.add_test_img('NhyktTest_test003AddSchool')
     def test003AddSchool(self):  # 新增学校
         '''admin新增学校和删除学校'''
         try:
-            self.driver.find_element_by_css_selector('[class=" 1ant-tabs-tab"]').click()
+            self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/div').click()
+            self.driver.find_element_by_xpath('//*[@id="menu"]/li[5]/ul/li[1]').click()
+            self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
             x = 0
+            sleep(1)
             schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
             for school in schools:
                 x += 1
                 if 'rock测试学校' in school.text:
+
                     # 下面是删除学校
                     schools[x - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
                     sleep(1)
@@ -227,19 +233,20 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_elements_by_css_selector('[class="ant-select-dropdown-menu-item"]')[0].click()
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             # 获取第一页的学校列表
-            sleep(1)
+            sleep(2)
             n = 0
-            schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
-            for school in schools:
+            Allschool = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
+            for school in Allschool:
                 n += 1
                 if 'rock测试学校' in school.text:
                     print('学校新增功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test003AddSchoolSucceed.png')
                     # 下面是删除学校
-                    schools[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
+                    Allschool[n - 1].find_element_by_css_selector('[class="option-danger-color"]').click()
                     sleep(1)
                     self.driver.find_element_by_css_selector(
                         ' div.ant-modal-confirm-btns > button.ant-btn.ant-btn-primary').click()
+                    sleep(5)
                     break
         except:
             print('新增学校失败')
@@ -687,6 +694,8 @@ class NhyktTest(unittest.TestCase):
     # def test012StudentIntoLive(self):
     #     '''学生进入直播间上课'''
     #     try:
+    #         # 关闭广告
+    #         self.driver.find_element_by_css_selector('[class="ant-modal-close-x"]').click()
     #         # 点击进入直播
     #         self.driver.find_element_by_xpath('//*[@class="option_item online"]/span').click()
     #         sleep(2)
@@ -771,4 +780,4 @@ class NhyktTest(unittest.TestCase):
 
 if __name__ == '__main__':
     # unittest.main()
-    testBeautifulReport("t2.py", "南海云课堂管理后台自动化测试报告", "南海云课堂管理后台回归流程测试")
+    testBeautifulReport("t2.py", "report1", "南海云课堂管理后台回归流程测试")
