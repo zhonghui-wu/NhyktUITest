@@ -19,6 +19,9 @@ class NhyktTest(unittest.TestCase):
     def setUpClass(cls):
         global date
         date = time.strftime('%Y%m%d')
+        photo = os.path.exists('./photo')
+        if not photo:
+            os.mkdir('photo')
         isExists = os.path.exists(f'./photo/{date}')
         if not isExists:
             os.mkdir(f'./photo/{date}')
@@ -325,7 +328,7 @@ class NhyktTest(unittest.TestCase):
             teacherListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
             self.assertTrue(teacherListPhone)
             for i in teacherListPhone:
-                if newTeacherPhone == i.text:
+                if int(newTeacherPhone)-1 == int(i.text):
                     print('新增老师功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test004AddTeacherSucceed.png')
                     break
@@ -390,7 +393,7 @@ class NhyktTest(unittest.TestCase):
             studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
             self.assertTrue(studentListPhone)
             for i in studentListPhone:
-                if newStudentPhone == i.text:
+                if int(newTeacherPhone)-1 == int(i.text):
                     print('新增学生成功')
                     print('新增学生功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test005AddStudentSucceed.png')
