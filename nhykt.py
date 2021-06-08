@@ -13,7 +13,7 @@ from BeautifulReport import BeautifulReport
 
 
 class NhyktTest(unittest.TestCase):
-    global timelast, courseName, liveCourse, date
+    global timelast, courseName, date
 
     @classmethod
     def setUpClass(cls):
@@ -306,15 +306,16 @@ class NhyktTest(unittest.TestCase):
                     # 滑到顶部
                     self.driver.execute_script("var q=document.documentElement.scrollTop=0")
                     phone.Phone += 1
-                    # 清除输入框内容
-                    teacherFrom[1].send_keys(Keys.CONTROL + 'a')
-                    teacherFrom[1].send_keys(Keys.DELETE)
-                    # 重新输入
-                    newTeacherPhone = '131' + str(phone.Phone)
-                    teacherFrom[1].send_keys(newTeacherPhone)
-                    # 将屏幕滚动到最下面
-                    self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
                     try:
+                        # 清除输入框内容
+                        teacherFrom[1].send_keys(Keys.CONTROL + 'a')
+                        teacherFrom[1].send_keys(Keys.DELETE)
+                        # 重新输入
+                        newTeacherPhone = '131' + str(phone.Phone)
+                        teacherFrom[1].send_keys(newTeacherPhone)
+                        # 将屏幕滚动到最下面
+                        self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
+
                         # 提交
                         sleep(1)
                         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
@@ -393,7 +394,7 @@ class NhyktTest(unittest.TestCase):
             studentListPhone = self.driver.find_elements_by_xpath('//*[@class="ant-table-tbody"]/tr/td[4]')
             self.assertTrue(studentListPhone)
             for i in studentListPhone:
-                if int(newTeacherPhone)-1 == int(i.text):
+                if int(newStudentPhone)-1 == int(i.text):
                     print('新增学生成功')
                     print('新增学生功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test005AddStudentSucceed.png')
@@ -506,7 +507,7 @@ class NhyktTest(unittest.TestCase):
     @BeautifulReport.add_test_img('NhyktTest_test008CreateLive')
     def test008CreateLive(self):
         '''admin排课'''
-        global liveCourse
+
         try:
             # 进入快速排课,输入上课老师
             self.driver.find_element_by_css_selector('[class="ant-select ant-select-enabled ant-select-no-arrow"]').click()
@@ -565,7 +566,7 @@ class NhyktTest(unittest.TestCase):
             self.save_img('NhyktTest_test008CreateLive')
             traceback.print_exc()
             assert False
-        return liveCourse
+        return
 
     @BeautifulReport.add_test_img('NhyktTest_test009TeacherLogin')
     def test009TeacherLogin(self):
@@ -719,6 +720,15 @@ class NhyktTest(unittest.TestCase):
             sleep(2)
             allHandles = self.driver.window_handles
             self.driver.switch_to.window(allHandles[-1])
+            try:
+                # 点击 三次下一步
+                self.driver.find_elements_by_css_selector('[class="tic-btn ing"]')[0].click()
+                self.driver.find_elements_by_css_selector('[class="tic-btn ing"]')[1].click()
+                self.driver.find_elements_by_css_selector('[class="tic-btn ing"]')[1].click()
+                # 点击 进入课堂
+                self.driver.find_elements_by_css_selector('[class="tic-btn ing"]')[1].click()
+            except:
+                pass
             sleep(2)
             ele = self.driver.find_element_by_css_selector('[class="left-time menu-course__time"]')
             if '已开课' in ele.text:
@@ -767,29 +777,6 @@ class NhyktTest(unittest.TestCase):
                             break
                 break
 
-            # admin删除排课
-            sleep(1)
-            n = 0
-            self.driver.find_element_by_xpath('//*[@id="menu"]/li[2]/ul/li[1]').click()
-            AllLiveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
-            self.assertTrue(AllLiveCourse)
-            for i in AllLiveCourse:
-                n += 1
-                if courseName == i.text:
-                    ele = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[n - 1]
-                    ele.find_element_by_link_text('删除').click()
-                    sleep(1)
-                    self.driver.find_element_by_xpath('//*[@class="ant-modal-confirm-btns"]/button[2]').click()
-                    sleep(1)
-                    AllLiveCourse1 = self.driver.find_elements_by_xpath(
-                        '//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
-                    for LiveCourse in AllLiveCourse1:
-                        if courseName == LiveCourse.text:
-                            print('删除排课不成功')
-                        else:
-                            print('删除排课成功')
-                            break
-                break
         except:
             traceback.print_exc()
             self.save_img('NhyktTest_test013Clear')
