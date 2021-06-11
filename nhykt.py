@@ -152,9 +152,13 @@ class NhyktTest(unittest.TestCase):
             sleep(1)
             # 将屏幕滚动到最下面
             self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
-            # 点击输入页数，进入最后一页
-            self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
-                '100000\n')
+            try:
+                # 点击输入页数，进入最后一页
+                self.driver.find_element_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input').send_keys(
+                    '100000\n')
+            except:
+                self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[
+                    1].send_keys('100000\n')
             sleep(1)
             n = 0
             all = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
@@ -178,8 +182,13 @@ class NhyktTest(unittest.TestCase):
             sleep(1)
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             sleep(1)
-            self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[1].send_keys(
-                '100000\n')
+            try:
+                # 点击输入页数，进入最后一页
+                self.driver.find_element_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input').send_keys(
+                    '100000\n')
+            except:
+                self.driver.find_elements_by_xpath('//*[@class="ant-pagination-options-quick-jumper"]/input')[
+                    1].send_keys('100000\n')
             x = 0
             sleep(1)
             all1 = self.driver.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr')
@@ -541,6 +550,7 @@ class NhyktTest(unittest.TestCase):
                 subscript2 = int(browserMinute.text) + 4
                 allMinute[subscript2].click()
             # 选择结束时间
+            sleep(1)
             self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
             etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
             sleep(1)
@@ -735,6 +745,14 @@ class NhyktTest(unittest.TestCase):
                 print('学生进入直播间成功')
                 print('学生进入直播间测试正常')
                 self.driver.save_screenshot(f'./photo/{date}/test012StudentIntoLiveSucceed.png')
+
+            # 获取所有的浏览器句柄
+            allHandles = self.driver.window_handles
+            self.driver.switch_to.window(allHandles[2])
+            # 老师关闭直播
+            self.driver.find_element_by_css_selector('[class="tic-btn headerbtn end red"]').click()
+            self.driver.find_element_by_css_selector('[class="ivu-btn ivu-btn-primary ivu-btn-large"]').click()
+
         except:
             print('学生进入直播间失败')
             self.save_img('NhyktTest_test012StudentIntoLive')
@@ -746,12 +764,7 @@ class NhyktTest(unittest.TestCase):
     def test013Clear(self):
         '''老师下课，删除排课信息，删除新增的课程'''
         try:
-            # 获取所有的浏览器句柄
             allHandles = self.driver.window_handles
-            self.driver.switch_to.window(allHandles[2])
-            # 老师关闭直播
-            self.driver.find_element_by_css_selector('[class="tic-btn headerbtn end red"]').click()
-            self.driver.find_element_by_css_selector('[class="ivu-btn ivu-btn-primary ivu-btn-large"]').click()
             # admin删除创建的直播课
             self.driver.switch_to.window(allHandles[0])
             self.driver.execute_script("var q=document.documentElement.scrollTop=10000")
