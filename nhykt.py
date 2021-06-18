@@ -562,6 +562,41 @@ class NhyktTest(unittest.TestCase):
             # 点击提交
             self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
             sleep(1)
+            try:
+                while True:
+                    hint = self.driver.find_element_by_css_selector('[class="ant-form-explain"]')
+                    self.assertTrue(hint)
+                    if hint:
+                        self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[0].click()
+                        allHour = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
+                        allMinute = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][2]/ul/li')
+                        browserHour = \
+                            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
+                        browserMinute = \
+                            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
+                        nowMinute = nowTime[2] + nowTime[3]
+                        nowHour = nowTime[0] + nowTime[1]
+                        # 开始时间
+                        if int(nowMinute) >= 56:
+                            subscript1 = int(browserHour.text) + 1  # 下标
+                            allHour[subscript1].click()
+                        else:
+                            subscript2 = int(browserMinute.text) + 4
+                            allMinute[subscript2].click()
+                        # 选择结束时间
+                        self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
+                        etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
+                        sleep(1)
+                        self.driver.find_element_by_css_selector('[class="ant-time-picker-panel-input "]').send_keys(etime)
+                        self.driver.find_element_by_css_selector('[class="title"]').click()
+                        # 点击提交
+                        self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
+                        break
+                    else:
+                        break
+            except:
+                pass
+            sleep(1)
             liveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
             self.assertTrue(liveCourse)
             for i in liveCourse:

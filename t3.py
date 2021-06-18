@@ -62,7 +62,7 @@ from selenium.webdriver.common.keys import Keys
 #         )
 
 
-import mysql.connector
+import pymysql
 import sshtunnel
 
 with sshtunnel.SSHTunnelForwarder(
@@ -74,7 +74,7 @@ with sshtunnel.SSHTunnelForwarder(
         remote_bind_address=('172.24.0.17', 3306),
         local_bind_address=('127.0.0.1', 13306)
 ) as tunnel:
-    conn = mysql.connector.connect(
+    conn = pymysql.connect(
         user='rock.wu',
         password='ciR7td8kQ',
         host='127.0.0.1',
@@ -82,14 +82,10 @@ with sshtunnel.SSHTunnelForwarder(
         database='tiac',
     )
     cursor = conn.cursor()
-    phoneList = [('13211111337'), ('13211111337')]
-    # list1 = [1, 2]
-    # commit_phoneList = [[list1[i], phoneList[i]] for i in range(len(phoneList))]
-    # print(commit_phoneList)
+    phoneList = [('13211111337'), ('13211111336')]
 
     try:
-        sql = "update `user` set is_delete = 1 where phone = %s;"
-        print(sql)
+        sql = "update user set is_delete = 0 where phone = (%s);"
         # 使用 execute()  方法执行 SQL 查询
         cursor.executemany(sql, phoneList)
         # 提交到数据库
@@ -97,7 +93,8 @@ with sshtunnel.SSHTunnelForwarder(
         # 使用 fetchone() 方法获取单条数据.
         # data = cursor.fetchall()
         # print(data)
-    except:
+    except Exception as e:
+        print()
         # 发生错误时回滚
         conn.rollback()
     # 关闭数据库连接

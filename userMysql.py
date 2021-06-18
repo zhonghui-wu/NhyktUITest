@@ -1,8 +1,8 @@
-import mysql.connector
+import pymysql
 import sshtunnel
 
 
-def userSQL(sshIP, sshPort, databaseIP, databasePwd, databaseName, sshKeyAddress, sql):
+def userSQL(sshIP, sshPort, databaseIP, databasePwd, databaseName, sshKeyAddress, data):
     '''
     :param sshIP:
     :param sshPort:
@@ -22,7 +22,7 @@ def userSQL(sshIP, sshPort, databaseIP, databasePwd, databaseName, sshKeyAddress
             remote_bind_address=(databaseIP, 3306),
             local_bind_address=('127.0.0.1', 13306)
     ) as tunnel:
-        conn = mysql.connector.connect(
+        conn = pymysql.connect(
             user='rock.wu',
             password=databasePwd,
             host='127.0.0.1',
@@ -30,10 +30,10 @@ def userSQL(sshIP, sshPort, databaseIP, databasePwd, databaseName, sshKeyAddress
             database=databaseName,
         )
         cursor = conn.cursor()
-        sql = sql
+        sql = "update user set is_delete = 1 where user_id = (%s);"
         try:
             # 使用 execute()  方法执行 SQL 查询
-            cursor.execute(sql)
+            cursor.executemany(sql, data)
             # 提交到数据库
             conn.commit()
             # 使用 fetchone() 方法获取单条数据.
