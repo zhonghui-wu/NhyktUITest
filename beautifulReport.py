@@ -30,4 +30,5 @@ def force_attach_image(img_nm):
 
 if __name__ == '__main__':
     # 生成测试报告
-    testBeautifulReport("nhykt.py", "report", "优课互动管理后台回归流程测试")
+    testBeautifulReport("nhykt.py", "report", "南海云课堂管理后台回归流程测试")
+    # testBeautifulReport("t2.py", "report1", "南海云课堂管理后台回归流程测试")

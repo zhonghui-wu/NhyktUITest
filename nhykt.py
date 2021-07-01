@@ -104,10 +104,11 @@ class NhyktTest(unittest.TestCase):
             # 输入验证码
             self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
             self.driver.find_element_by_css_selector('span > button').click()
-
+            i = 0
             while True:
                 # 判断是否有这个元素
                 try:
+                    i += 1
                     warn = self.driver.find_element_by_css_selector('[class="ant-form-explain"]')
                 except:
                     break
@@ -122,7 +123,8 @@ class NhyktTest(unittest.TestCase):
                         # 输入验证码
                         inp.send_keys(code)
                         self.driver.find_element_by_css_selector('span > button').click()
-
+                        if i == 30:
+                            break
                     else:
                         break
 
@@ -170,14 +172,14 @@ class NhyktTest(unittest.TestCase):
                     delete = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
                     delete[n - 1].click()
                     sleep(1)
-                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
                 else:
                     pass
 
             # 增加学科
             sleep(1)
-            self.driver.find_element_by_css_selector('div.subjectManagement > button').click()
+            self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[5].click()
             self.driver.find_element_by_css_selector('span > input').send_keys('rock测试')
             sleep(1)
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
@@ -202,7 +204,7 @@ class NhyktTest(unittest.TestCase):
                     deletes = name.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
                     deletes[x - 1].click()
                     sleep(1)
-                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
         except:
             print('新增学科失败')
@@ -228,11 +230,11 @@ class NhyktTest(unittest.TestCase):
                     deles = school.find_elements_by_css_selector('[class="option-danger-color"]')
                     deles[x - 1].click()
                     sleep(1)
-                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     sleep(1)
                     break
             sleep(1)
-            self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[0].click()
+            self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[1].click()
             # 新增信息信息填写
             schoolForm = self.driver.find_elements_by_css_selector('[class="ant-input"]')
             # 学校名称
@@ -262,7 +264,7 @@ class NhyktTest(unittest.TestCase):
                     dele = aschool.find_elements_by_css_selector('[class="option-danger-color"]')
                     dele[n-1].click()
                     sleep(1)
-                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[3].click()
+                    self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
         except:
             print('新增学校失败')
@@ -307,11 +309,13 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('[class="ant-btn ant-btn-primary"]').click()
             # 提交
             self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+            j = 0
             while True:
                 ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
                 teacherFrom = self.driver.find_elements_by_css_selector('[class="ant-input"]')
                 self.assertTrue(teacherFrom)
                 if ele:
+                    j += 1
                     # 滑到顶部
                     self.driver.execute_script("var q=document.documentElement.scrollTop=0")
                     phone.Phone += 1
@@ -330,7 +334,8 @@ class NhyktTest(unittest.TestCase):
                         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
                     except:
                         pass
-
+                    if j == 10:
+                        break
                 else:
                     break
             # 获取老师列表
@@ -376,9 +381,11 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_css_selector('li.ant-select-dropdown-menu-item.ant-select-dropdown-menu-item-active').click()
             # 点击提交
             self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
+            j = 0
             while True:
                 ele = self.driver.find_elements_by_css_selector('[class="title_bar"]')
                 if ele:
+                    j += 1
                     phone.Phone += 1
                     try:
                         # 清除输入框内容
@@ -391,7 +398,8 @@ class NhyktTest(unittest.TestCase):
                         self.driver.find_element_by_css_selector('[class="addbtn ant-btn ant-btn-primary"]').click()
                     except:
                         pass
-
+                    if j == 10:
+                        break
                 else:
                     break
             # 将phone的值保存
@@ -523,7 +531,6 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_elements_by_css_selector('[class="ant-select-search__field"]')[1].send_keys('rock')
             sleep(1)
             self.driver.find_element_by_css_selector('[class="title"]').click()
-
             # 选择开课日期为今天
             sleep(1)
             self.driver.find_element_by_css_selector('[class="ant-calendar-picker"]').click()
@@ -537,12 +544,13 @@ class NhyktTest(unittest.TestCase):
             allHour = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
             allMinute = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][2]/ul/li')
             browserHour = \
-            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
+                self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
             browserMinute = \
-            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
+                self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
             nowMinute = nowTime[2] + nowTime[3]
-            nowHour = nowTime[0] + nowTime[1]
+            # nowHour = nowTime[0] + nowTime[1]
             # 开始时间
+            sleep(1)
             if int(nowMinute) >= 56:
                 subscript1 = int(browserHour.text) + 1  # 下标
                 allHour[subscript1].click()
@@ -552,9 +560,13 @@ class NhyktTest(unittest.TestCase):
             # 选择结束时间
             sleep(1)
             self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
-            etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
             sleep(1)
-            self.driver.find_element_by_css_selector('[class="ant-time-picker-panel-input "]').send_keys(etime)
+            allHour1 = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
+            browserHour1 = \
+                self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
+            sendHour = int(browserHour1.text) + 2  # 下标
+            allHour1[sendHour].click()
+            self.driver.save_screenshot(f'./photo/{date}/chooseEndtime1.png')
             self.driver.find_element_by_css_selector('[class="title"]').click()
             # 输入直播名称
             self.driver.find_elements_by_css_selector('[class="ant-input"]')[0].send_keys('rock测试直播')
@@ -562,36 +574,31 @@ class NhyktTest(unittest.TestCase):
             # 点击提交
             self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
             sleep(1)
+            i = 0
             try:
                 while True:
+                    # 获取报错信息
+                    i += 1
                     hint = self.driver.find_element_by_css_selector('[class="ant-form-explain"]')
                     self.assertTrue(hint)
                     if hint:
-                        self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[0].click()
-                        allHour = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][1]/ul/li')
-                        allMinute = self.driver.find_elements_by_xpath('//*[@class="ant-time-picker-panel-select"][2]/ul/li')
-                        browserHour = \
-                            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[0]
-                        browserMinute = \
-                            self.driver.find_elements_by_css_selector('[class="ant-time-picker-panel-select-option-selected"]')[1]
-                        nowMinute = nowTime[2] + nowTime[3]
-                        nowHour = nowTime[0] + nowTime[1]
-                        # 开始时间
-                        if int(nowMinute) >= 56:
-                            subscript1 = int(browserHour.text) + 1  # 下标
-                            allHour[subscript1].click()
-                        else:
-                            subscript2 = int(browserMinute.text) + 4
-                            allMinute[subscript2].click()
-                        # 选择结束时间
                         self.driver.find_elements_by_css_selector('[class="ant-time-picker-input"]')[1].click()
-                        etime = str(int(nowHour) + 2) + ':' + str(nowMinute)
                         sleep(1)
-                        self.driver.find_element_by_css_selector('[class="ant-time-picker-panel-input "]').send_keys(etime)
+                        allHour2 = self.driver.find_elements_by_xpath(
+                            '//*[@class="ant-time-picker-panel-select"][1]/ul/li')
+                        browserHour2 = \
+                            self.driver.find_elements_by_css_selector(
+                                '[class="ant-time-picker-panel-select-option-selected"]')[0]
+                        sendHour = int(browserHour2.text) + 2  # 下标
+                        allHour2[sendHour].click()
+                        self.driver.save_screenshot(f'./photo/{date}/chooseEndtime2.png')
                         self.driver.find_element_by_css_selector('[class="title"]').click()
                         # 点击提交
                         self.driver.find_element_by_css_selector('[class="addForm ant-btn ant-btn-primary"]').click()
-                        break
+                        print(f'再次提交了{i}次了')
+                        if i == 10:
+                            break
+
                     else:
                         break
             except:
@@ -599,8 +606,8 @@ class NhyktTest(unittest.TestCase):
             sleep(1)
             liveCourse = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]/td[7]')
             self.assertTrue(liveCourse)
-            for i in liveCourse:
-                if courseName == i.text:
+            for name in liveCourse:
+                if courseName == name.text:
                     print('排课管理测试成功')
                     self.driver.save_screenshot(f'./photo/{date}/test008CreateLiveSucceed.png')
                     break
@@ -628,10 +635,11 @@ class NhyktTest(unittest.TestCase):
             # 输入验证码
             self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
             self.driver.find_element_by_css_selector('span > button').click()
-
+            i = 0
             while True:
                 # 判断是否有这个元素
                 try:
+                    i += 1
                     warn = self.driver.find_element_by_css_selector('[class="ant-form-explain"]')
                 except:
                     break
@@ -645,7 +653,8 @@ class NhyktTest(unittest.TestCase):
                     # 输入验证码
                     inp.send_keys(code)
                     self.driver.find_element_by_css_selector('span > button').click()
-
+                    if i == 30:
+                        break
                 else:
                     break
             sleep(2)
@@ -720,10 +729,11 @@ class NhyktTest(unittest.TestCase):
             # 输入验证码
             self.driver.find_elements_by_css_selector('span > input')[2].send_keys(code)
             self.driver.find_element_by_css_selector('span > button').click()
-
+            i = 0
             while True:
                 # 判断是否有这个元素
                 try:
+                    i +=1
                     warn = self.driver.find_element_by_css_selector('[class="ant-form-explain"]')
                 except:
                     break
@@ -738,7 +748,8 @@ class NhyktTest(unittest.TestCase):
                         # 输入验证码
                         inp.send_keys(code)
                         self.driver.find_element_by_css_selector('span > button').click()
-
+                        if i == 30:
+                            break
                     else:
                         break
 
