@@ -34,8 +34,8 @@ class NhyktTest(unittest.TestCase):
             cls.chrome_options.add_argument('--headless')
             cls.chrome_options.add_argument('--disable-gpu')
             cls.chrome_options.add_argument('--force-device-scale-factor=1')
-            cls.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=cls.chrome_options)
-            # cls.driver = webdriver.Chrome(chrome_options=cls.chrome_options)
+            # cls.driver = webdriver.Chrome(executable_path='/usr/local/bin/chromedriver', chrome_options=cls.chrome_options)
+            cls.driver = webdriver.Chrome(chrome_options=cls.chrome_options)
             cls.driver.get(adminHost)
             cls.driver.set_window_size(1920, 1080)
             cls.driver.implicitly_wait(5)
@@ -169,8 +169,9 @@ class NhyktTest(unittest.TestCase):
                 n += 1
                 if "rock测试" in i.text:
                     # 下面是删除学科
-                    delete = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-                    delete[n - 1].click()
+                    # delete = i.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    # delete[n - 1].click()
+                    i.find_element_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]').click()
                     sleep(1)
                     self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
@@ -201,8 +202,9 @@ class NhyktTest(unittest.TestCase):
                     print('学科添加成功，学科新增功能测试正常！')
                     self.driver.save_screenshot(f'./photo/{date}/test002AddCourseSucceed.png')
                     # 下面是删除学科
-                    deletes = name.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
-                    deletes[x - 1].click()
+                    # deletes = name.find_elements_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]')
+                    # deletes[x - 1].click()
+                    name.find_element_by_xpath('//*[@class="subjectManagement"]/div//table/tbody/tr/td/a[2]').click()
                     sleep(1)
                     self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
@@ -219,16 +221,13 @@ class NhyktTest(unittest.TestCase):
         try:
             sleep(1)
             self.driver.find_element_by_css_selector('[class=" ant-tabs-tab"]').click()
-            x = 0
             sleep(1)
             schools = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
             self.assertTrue(schools)
             for school in schools:
-                x += 1
                 if 'rock测试学校' in school.text:
                     # 下面是删除学校
-                    deles = school.find_elements_by_css_selector('[class="option-danger-color"]')
-                    deles[x - 1].click()
+                    school.find_element_by_css_selector('[class="option-danger-color"]').click()
                     sleep(1)
                     self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     sleep(1)
@@ -252,17 +251,14 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_element_by_xpath('//*[@class="ant-modal-footer"]/div/button[2]').click()
             # 获取第一页的学校列表
             sleep(2)
-            n = 0
             Allschool = self.driver.find_elements_by_css_selector('[class="ant-table-row ant-table-row-level-0"]')
             self.assertTrue(Allschool)
             for aschool in Allschool:
-                n += 1
                 if 'rock测试学校' in aschool.text:
                     print('学校新增功能测试正常')
                     self.driver.save_screenshot(f'./photo/{date}/test003AddSchoolSucceed.png')
                     # 下面是删除学校
-                    dele = aschool.find_elements_by_css_selector('[class="option-danger-color"]')
-                    dele[n-1].click()
+                    aschool.find_element_by_css_selector('[class="option-danger-color"]').click()
                     sleep(1)
                     self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[6].click()
                     break
@@ -491,7 +487,7 @@ class NhyktTest(unittest.TestCase):
             self.driver.find_elements_by_css_selector('[class="input-radio"]')[6].click()
             self.driver.find_elements_by_css_selector('[class="ant-btn ant-btn-primary"]')[1].click()
             # 输入课程简介
-            self.driver.switch_to.frame('ueditor_1')
+            self.driver.switch_to.frame('ueditor_0')
             self.driver.find_elements_by_css_selector('[class="view"]')[1].send_keys('测试课程简介')
             # 回到之前的iframe
             self.driver.switch_to.default_content()
@@ -821,8 +817,9 @@ class NhyktTest(unittest.TestCase):
             for j in allCourse:
                 s += 1
                 if courseName == j.text:
-                    ele1 = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[s - 1]
-                    ele1.find_element_by_link_text('删除').click()
+                    # ele1 = self.driver.find_elements_by_xpath('//*[@class="ant-table-row ant-table-row-level-0"]')[s - 1]
+                    # ele1.find_element_by_link_text('删除').click()
+                    j.find_element_by_link_text('删除').click()
                     sleep(1)
                     self.driver.find_element_by_xpath('//*[@class="ant-modal-confirm-btns"]/button[2]').click()
                     sleep(1)
